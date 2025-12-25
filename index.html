@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ShopEase | Modern eCommerce</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <title>ShopEase | Premium Online Shopping</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <div class="navbar">
+  <header class="header">
+    <div class="navbar container">
       <div class="logo">ShopEase</div>
       <nav id="navMenu">
         <a href="#">Home</a>
@@ -19,35 +19,42 @@
       </nav>
       <div class="actions">
         <div class="search-container">
-          <input type="text" id="searchInput" class="search-input" placeholder="Search products..." aria-label="Search products">
+          <input type="text" id="searchInput" class="search-input" placeholder="Search products..." />
         </div>
-        <span id="cartCount" class="cart-badge">0</span>
-        <button class="wishlist-toggle" id="wishlistToggle" aria-label="View wishlist">❤️</button>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
-        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+        <div class="cart-icon">
+          <span id="cartCount" class="cart-badge">0</span>
+        </div>
+        <button class="icon-btn wishlist-toggle" id="wishlistToggle" aria-label="Wishlist">❤️</button>
+        <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
       </div>
     </div>
   </header>
 
   <section class="hero">
-    <div class="hero-text">
-      <h1>Discover, Shop &amp; Enjoy</h1>
-      <p>Explore top brands and trending styles curated just for you. ShopEase makes online shopping seamless and fun.</p>
-      <button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
-    </div>
-    <div class="hero-img">
-      <img src="3d rendering of minimal search bar and pink cursor_  _ Premium Photo.jpeg" alt="Shopping hero image" loading="lazy">
+    <div class="container hero-content">
+      <div class="hero-text">
+        <h1>Discover True Elegance</h1>
+        <p>Premium picks • Express delivery • Irresistible prices</p>
+        <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+          Shop Now
+        </button>
+      </div>
+      <div class="hero-image">
+        <img src="3d rendering of minimal search bar and pink cursor_  _ Premium Photo.jpeg" alt="Premium Shopping" loading="lazy" />
+      </div>
     </div>
   </section>
 
-  <div class="filters">
-    <button class="active" data-filter="all">All</button>
-    <button data-filter="fashion">Fashion</button>
-    <button data-filter="electronics">Electronics</button>
-    <button data-filter="accessories">Accessories</button>
+  <div class="filters container">
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="fashion">Fashion</button>
+      <button class="filter-btn" data-filter="electronics">Electronics</button>
+      <button class="filter-btn" data-filter="accessories">Accessories</button>
+    </div>
     <div class="sort-container">
-      <label for="sortSelect" class="sr-only">Sort products</label>
-      <select id="sortSelect" aria-label="Sort products">
+      <select id="sortSelect">
         <option value="name-asc">Name (A-Z)</option>
         <option value="name-desc">Name (Z-A)</option>
         <option value="price-asc">Price (Low to High)</option>
@@ -56,164 +63,264 @@
     </div>
   </div>
 
-  <section class="products" id="products">
-    <h2>Popular Picks</h2>
+  <section class="products container" id="products">
+    <h2 class="section-title">Popular Picks</h2>
     <div class="product-grid" id="productGrid">
       <div class="product" data-category="fashion">
-        <img src="https://cdn.pixabay.com/photo/2016/11/29/05/08/adult-1868750_960_720.jpg" alt="Summer Dress" loading="lazy">
-        <h3>Summer Dress</h3>
-        <p class="price">$45.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Summer Dress">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="1">❤️</a>
+        <img src="https://fashionallure.com/wp-content/uploads/dress-2572866_1920.jpg" alt="Summer Floral Dress" loading="lazy">
+        <h3>Summer Floral Dress</h3>
+        <p class="price">₹4,499</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Summer Floral Dress">Contact</button>
+          <button class="btn-wishlist" data-product-id="1">❤️</button>
+        </div>
       </div>
+
       <div class="product" data-category="electronics">
-        <img src="https://cdn.pixabay.com/photo/2014/04/05/11/40/smartphone-316472_960_720.jpg" alt="Smartphone X" loading="lazy">
-        <h3>Smartphone X</h3>
-        <p class="price">$699.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Smartphone X">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="2">❤️</a>
+        <img src="https://www.dxomark.com/wp-content/uploads/medias/post-90166/MicrosoftTeams-image-7-1024x691.jpg" alt="Smartphone X Pro" loading="lazy">
+        <h3>Smartphone X Pro</h3>
+        <p class="price">₹80,699</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Smartphone X Pro">Contact</button>
+          <button class="btn-wishlist" data-product-id="2">❤️</button>
+        </div>
       </div>
+
       <div class="product" data-category="accessories">
-        <img src="https://cdn.pixabay.com/photo/2017/08/06/14/45/watches-2594368_960_720.jpg" alt="Classic Watch" loading="lazy">
-        <h3>Classic Watch</h3>
-        <p class="price">$89.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Classic Watch">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="3">❤️</a>
+        <img src="https://b3111158.smushcdn.com/3111158/wp-content/uploads/2022/08/best-classic-watches-xl-hd-1465x1099-c-center.jpg?lossy=2&strip=1&webp=1" alt="Luxury Classic Watch" loading="lazy">
+        <h3>Luxury Classic Watch</h3>
+        <p class="price">₹16,099</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Luxury Classic Watch">Contact</button>
+          <button class="btn-wishlist" data-product-id="3">❤️</button>
+        </div>
       </div>
+
       <div class="product" data-category="electronics">
-        <img src="https://cdn.pixabay.com/photo/2015/09/05/22/46/laptop-925808_960_720.jpg" alt="Laptop Pro" loading="lazy">
-        <h3>Laptop Pro</h3>
-        <p class="price">$1099.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Laptop Pro">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="4">❤️</a>
+        <img src="https://cdn.mos.cms.futurecdn.net/LekCjjpyVoWeFAJwZ79Tzc.jpg" alt="UltraBook Pro 15" loading="lazy">
+        <h3>UltraBook Pro 15</h3>
+        <p class="price">₹1,16,499</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="UltraBook Pro 15">Contact</button>
+          <button class="btn-wishlist" data-product-id="4">❤️</button>
+        </div>
       </div>
+
       <div class="product" data-category="fashion">
-        <img src="https://cdn.pixabay.com/photo/2016/03/27/21/16/shoes-1284341_960_720.jpg" alt="Stylish Sneakers" loading="lazy">
-        <h3>Stylish Sneakers</h3>
-        <p class="price">$59.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Stylish Sneakers">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="5">❤️</a>
+        <img src="https://m.media-amazon.com/images/I/41lwPvOW4hL._AC_UY900_.jpg" alt="AirBoost Sneakers" loading="lazy">
+        <h3>AirBoost Sneakers</h3>
+        <p class="price">₹10,699</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="AirBoost Sneakers">Contact</button>
+          <button class="btn-wishlist" data-product-id="5">❤️</button>
+        </div>
       </div>
+
       <div class="product" data-category="fashion">
-        <img src="https://cdn.pixabay.com/photo/2016/11/29/09/32/fashion-1869247_960_720.jpg" alt="Winter Jacket" loading="lazy">
-        <h3>Winter Jacket</h3>
-        <p class="price">$79.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Winter Jacket">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="6">❤️</a>
+        <img src="https://m.media-amazon.com/images/I/71fIkXwOzOL.jpg_BO30,255,255,255_UF900,850_SR1910,1000,0,C_QL100_.jpg" alt="Premium Winter Jacket" loading="lazy">
+        <h3>Premium Winter Jacket</h3>
+        <p class="price">₹13,399</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Premium Winter Jacket">Contact</button>
+          <button class="btn-wishlist" data-product-id="6">❤️</button>
+        </div>
       </div>
+
       <div class="product" data-category="electronics">
-        <img src="https://cdn.pixabay.com/photo/2016/03/27/07/12/headphones-1284042_960_720.jpg" alt="Wireless Headphones" loading="lazy">
-        <h3>Wireless Headphones</h3>
-        <p class="price">$129.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Wireless Headphones">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="7">❤️</a>
+        <img src="https://cdn.thewirecutter.com/wp-content/media/2023/09/noise-cancelling-headphone-2048px-0876.jpg" alt="Noise-Cancelling Headphones" loading="lazy">
+        <h3>Noise-Cancelling Headphones</h3>
+        <p class="price">₹22,399</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Noise-Cancelling Headphones">Contact</button>
+          <button class="btn-wishlist" data-product-id="7">❤️</button>
+        </div>
       </div>
+
       <div class="product" data-category="accessories">
-        <img src="https://cdn.pixabay.com/photo/2016/11/29/03/36/bag-1866503_960_720.jpg" alt="Leather Bag" loading="lazy">
-        <h3>Leather Bag</h3>
-        <p class="price">$49.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Leather Bag">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="8">❤️</a>
+        <img src="https://www.florenceleathermarket.com/image/cache/data/prodotti/borsa-6886/6886-marrone/6886MAR1-1000x800.jpg" alt="Italian Leather Bag" loading="lazy">
+        <h3>Italian Leather Bag</h3>
+        <p class="price">₹7,999</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Italian Leather Bag">Contact</button>
+          <button class="btn-wishlist" data-product-id="8">❤️</button>
+        </div>
       </div>
+
       <div class="product" data-category="fashion">
-        <img src="https://cdn.pixabay.com/photo/2016/11/23/14/45/jeans-1853301_960_720.jpg" alt="Denim Jeans" loading="lazy">
-        <h3>Denim Jeans</h3>
-        <p class="price">$39.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Denim Jeans">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="9">❤️</a>
+        <img src="https://cdn.thewirecutter.com/wp-content/media/2024/12/BEST-MENS-JEANS-2048px-5145.jpg?auto=webp&quality=75&width=1024" alt="Slim Fit Denim Jeans" loading="lazy">
+        <h3>Slim Fit Denim Jeans</h3>
+        <p class="price">₹6,299</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Slim Fit Denim Jeans">Contact</button>
+          <button class="btn-wishlist" data-product-id="9">❤️</button>
+        </div>
       </div>
+
       <div class="product" data-category="electronics">
-        <img src="https://cdn.pixabay.com/photo/2017/08/01/01/33/smart-watch-2561573_960_720.jpg" alt="Smart Watch" loading="lazy">
-        <h3>Smart Watch</h3>
-        <p class="price">$199.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Smart Watch">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="10">❤️</a>
+        <img src="https://cdn.thewirecutter.com/wp-content/media/2023/11/fitness-tracker-2048px-5344.jpg?auto=webp&quality=75&crop=1.91:1&width=1200" alt="Smart Fitness Watch" loading="lazy">
+        <h3>Smart Fitness Watch</h3>
+        <p class="price">₹26,799</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Smart Fitness Watch">Contact</button>
+          <button class="btn-wishlist" data-product-id="10">❤️</button>
+        </div>
       </div>
+
       <div class="product" data-category="fashion">
-        <img src="https://cdn.pixabay.com/photo/2016/11/29/13/14/shirt-1869701_960_720.jpg" alt="Casual Shirt" loading="lazy">
-        <h3>Casual Shirt</h3>
-        <p class="price">$29.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Casual Shirt">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="11">❤️</a>
+        <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/de5dc75c-c32c-4c0f-94ca-7ddad0b2a059.__CR0,0,600,450_PT0_SX600_V1___.jpg" alt="Casual Linen Shirt" loading="lazy">
+        <h3>Casual Linen Shirt</h3>
+        <p class="price">₹3,599</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Casual Linen Shirt">Contact</button>
+          <button class="btn-wishlist" data-product-id="11">❤️</button>
+        </div>
       </div>
+
       <div class="product" data-category="electronics">
-        <img src="https://cdn.pixabay.com/photo/2016/11/29/06/46/speaker-1868498_960_720.jpg" alt="Bluetooth Speaker" loading="lazy">
-        <h3>Bluetooth Speaker</h3>
-        <p class="price">$59.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Bluetooth Speaker">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="12">❤️</a>
+        <img src="https://cdn.thewirecutter.com/wp-content/media/2024/11/portablebluetoothspeakers-2048px-9130.jpg?auto=webp&quality=75&width=1024" alt="Portable Bluetooth Speaker" loading="lazy">
+        <h3>Portable Bluetooth Speaker</h3>
+        <p class="price">₹7,199</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Portable Bluetooth Speaker">Contact</button>
+          <button class="btn-wishlist" data-product-id="12">❤️</button>
+        </div>
       </div>
+
       <div class="product" data-category="accessories">
-        <img src="https://cdn.pixabay.com/photo/2016/11/29/05/45/sunglasses-1868761_960_720.jpg" alt="Sunglasses" loading="lazy">
-        <h3>Sunglasses</h3>
-        <p class="price">$19.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Sunglasses">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="13">❤️</a>
+        <img src="https://static2.feelgoodcontacts.net/images/ech/img/polarised-vs-unpolarised-sunglasses.webp" alt="Polarized Sunglasses" loading="lazy">
+        <h3>Polarized Sunglasses</h3>
+        <p class="price">₹5,399</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Polarized Sunglasses">Contact</button>
+          <button class="btn-wishlist" data-product-id="13">❤️</button>
+        </div>
       </div>
+
       <div class="product" data-category="fashion">
-        <img src="https://cdn.pixabay.com/photo/2016/11/29/13/58/hoodie-1870086_960_720.jpg" alt="Hoodie" loading="lazy">
-        <h3>Hoodie</h3>
-        <p class="price">$49.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Hoodie">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="14">❤️</a>
+        <img src="https://m.media-amazon.com/images/I/71ToTWVbRnL.jpg_BO30,255,255,255_UF900,850_SR1910,1000,0,C_QL100_.jpg" alt="Oversized Cozy Hoodie" loading="lazy">
+        <h3>Oversized Cozy Hoodie</h3>
+        <p class="price">₹5,799</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Oversized Cozy Hoodie">Contact</button>
+          <button class="btn-wishlist" data-product-id="14">❤️</button>
+        </div>
       </div>
+
       <div class="product" data-category="electronics">
-        <img src="https://cdn.pixabay.com/photo/2016/03/27/07/32/tablet-1284451_960_720.jpg" alt="Tablet" loading="lazy">
-        <h3>Tablet</h3>
-        <p class="price">$299.99</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="Tablet">Contact Seller</a>
-        <a href="#" class="btn-wishlist" data-product-id="15">❤️</a>
+        <img src="https://crdms.images.consumerreports.org/prod/products/cr/models/397372-tablets-apple-ipad-pro-11-64gb-2018-10001560.png" alt="Pro Tablet 11" loading="lazy">
+        <h3>Pro Tablet 11"</h3>
+        <p class="price">₹44,799</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Pro Tablet 11">Contact</button>
+          <button class="btn-wishlist" data-product-id="15">❤️</button>
+        </div>
+      </div>
+
+      <div class="product" data-category="accessories">
+        <img src="https://i.etsystatic.com/15350552/r/il/8a4f6f/2077310114/il_fullxfull.2077310114_jqfn.jpg" alt="Minimalist Silver Bracelet" loading="lazy">
+        <h3>Minimalist Silver Bracelet</h3>
+        <p class="price">₹3,599</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Minimalist Silver Bracelet">Contact</button>
+          <button class="btn-wishlist" data-product-id="16">❤️</button>
+        </div>
+      </div>
+
+      <div class="product" data-category="fashion">
+        <img src="https://westwoodhart.com/cdn/shop/articles/versatile-navy-blazer-khaki-chinos-urban-setting.png?v=1724798474&width=1456" alt="Tailored Formal Blazer" loading="lazy">
+        <h3>Tailored Formal Blazer</h3>
+        <p class="price">₹8,999</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Tailored Formal Blazer">Contact</button>
+          <button class="btn-wishlist" data-product-id="17">❤️</button>
+        </div>
+      </div>
+
+      <div class="product" data-category="electronics">
+        <img src="https://m.media-amazon.com/images/I/61TrbMmWyOL._AC_UF1000,1000_QL80_.jpg" alt="True Wireless Earbuds" loading="lazy">
+        <h3>True Wireless Earbuds</h3>
+        <p class="price">₹13,499</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="True Wireless Earbuds">Contact</button>
+          <button class="btn-wishlist" data-product-id="18">❤️</button>
+        </div>
+      </div>
+
+      <div class="product" data-category="accessories">
+        <img src="https://b2318134.smushcdn.com/2318134/wp-content/uploads/2024/12/japanese-estate-18k-yellow-gold-necklace-with-.5ct-round-diamond-center-scaled.jpg?lossy=2&strip=1&webp=1" alt="Elegant Gold Necklace" loading="lazy">
+        <h3>Elegant Gold Necklace</h3>
+        <p class="price">₹24,999</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Elegant Gold Necklace">Contact</button>
+          <button class="btn-wishlist" data-product-id="19">❤️</button>
+        </div>
+      </div>
+
+      <div class="product" data-category="fashion">
+        <img src="https://m.media-amazon.com/images/I/81T2te0n-gL._AC_UY1000_.jpg" alt="Premium Leather Wallet" loading="lazy">
+        <h3>Premium Leather Wallet</h3>
+        <p class="price">₹2,999</p>
+        <div class="product-actions">
+          <button class="btn-buy">Add to Cart</button>
+          <button class="btn-contact" data-product="Premium Leather Wallet">Contact</button>
+          <button class="btn-wishlist" data-product-id="20">❤️</button>
+        </div>
       </div>
     </div>
     <div class="pagination" id="pagination"></div>
   </section>
 
-  <div class="modal" id="contactModal" role="dialog" aria-labelledby="contactModalTitle">
+  <!-- Modals -->
+  <div class="modal" id="contactModal">
     <div class="modal-content">
-      <button class="modal-close" id="contactModalClose" aria-label="Close contact modal">✕</button>
-      <h3 id="contactModalTitle">Contact Seller</h3>
+      <button class="modal-close" id="contactModalClose">✕</button>
+      <h3>Contact Seller</h3>
       <form id="productContactForm">
-        <input type="text" name="name" placeholder="Your Name" aria-label="Your Name" required>
-        <input type="email" name="email" placeholder="Your Email" aria-label="Your Email" required>
-        <input type="text" name="subject" placeholder="Subject" aria-label="Subject" required>
-        <input type="tel" name="phone" placeholder="Phone Number (Optional)" aria-label="Phone Number">
-        <input type="text" name="product" id="contactProduct" placeholder="Product" aria-label="Product Name" readonly>
-        <textarea name="message" placeholder="Your Message" rows="5" aria-label="Your Message" required></textarea>
-        <button type="submit">Send Message</button>
-        <p class="form-message" id="productContactMessage"></p>
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <input type="text" name="subject" placeholder="Subject" required />
+        <input type="tel" name="phone" placeholder="Phone (Optional)" />
+        <input type="text" id="contactProduct" name="product" readonly />
+        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit" class="btn-primary">Send Message</button>
+        <p id="productContactMessage" class="form-message"></p>
       </form>
     </div>
   </div>
 
-  <div class="modal" id="wishlistModal" role="dialog" aria-labelledby="wishlistModalTitle">
+  <div class="modal" id="wishlistModal">
     <div class="modal-content">
-      <button class="modal-close" id="wishlistModalClose" aria-label="Close wishlist modal">✕</button>
-      <h3 id="wishlistModalTitle">Your Wishlist</h3>
+      <button class="modal-close" id="wishlistModalClose">✕</button>
+      <h3>Your Wishlist</h3>
       <div id="wishlistItems"></div>
     </div>
   </div>
 
-  
-
-  <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+  <button class="back-to-top" id="backToTop">↑</button>
 
   <footer>
-    <p>© 2025 ShopEase. All rights reserved.</p>
+    <div class="container">
+      <p>© 2025 ShopEase. All rights reserved.</p>
+    </div>
   </footer>
 
   <script src="script.js"></script>

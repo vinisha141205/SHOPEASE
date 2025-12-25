@@ -1,14 +1,12 @@
+
 const themeToggle = document.getElementById("themeToggle");
 const menuToggle = document.getElementById("menuToggle");
 const navMenu = document.getElementById("navMenu");
-const filters = document.querySelectorAll(".filters button");
+const filterBtns = document.querySelectorAll(".filter-btn");
 const sortSelect = document.getElementById("sortSelect");
-const products = document.querySelectorAll(".product");
-const productGrid = document.getElementById("productGrid");
-const cartCount = document.getElementById("cartCount");
 const searchInput = document.getElementById("searchInput");
+const cartCount = document.getElementById("cartCount");
 const backToTop = document.getElementById("backToTop");
-const contactForm = document.getElementById("contactForm");
 const contactModal = document.getElementById("contactModal");
 const contactModalClose = document.getElementById("contactModalClose");
 const productContactForm = document.getElementById("productContactForm");
@@ -21,309 +19,162 @@ const pagination = document.getElementById("pagination");
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-let currentPage = 1;
-const productsPerPage = 6;
 
-// Initialize cart count
 cartCount.textContent = cart.length;
-
-// Theme toggle
-themeToggle.onclick = () => {
-  document.body.classList.toggle("dark");
-  localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
-  themeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
-};
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark");
-  themeToggle.textContent = "☀️";
-}
-
-// Menu toggle
-menuToggle.onclick = () => navMenu.classList.toggle("active");
-
-// Update filter button counts
-const updateFilterCounts = () => {
-  const counts = {
-    all: products.length,
-    fashion: 0,
-    electronics: 0,
-    accessories: 0
-  };
-  products.forEach(p => counts[p.dataset.category]++);
-  filters.forEach(btn => {
-    const filter = btn.dataset.filter;
-    btn.textContent = filter === "all" ? `All (${counts.all})` : `${filter.charAt(0).toUpperCase() + filter.slice(1)} (${counts[filter]})`;
-  });
-};
-updateFilterCounts();
-
-// Update wishlist badge
-const updateWishlistBadge = () => {
-  wishlistToggle.textContent = `❤️ (${wishlist.length})`;
-};
 updateWishlistBadge();
 
-// Product filter
-filters.forEach(btn => {
-  btn.onclick = () => {
-    filters.forEach(b => b.classList.remove("active"));
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  themeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+});
+
+menuToggle.addEventListener("click", () => {
+  navMenu.classList.toggle("active");
+});
+
+filterBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    filterBtns.forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
-    currentPage = 1;
-    updateProductDisplay();
-  };
+    filterProducts();
+  });
 });
 
-// Sorting
-sortSelect.onchange = () => {
-  currentPage = 1;
-  updateProductDisplay();
-};
+sortSelect.addEventListener("change", filterProducts);
+searchInput.addEventListener("input", filterProducts);
 
-// Enhanced search
-searchInput.addEventListener("input", () => {
-  currentPage = 1;
-  updateProductDisplay();
-});
+function filterProducts() {
+  const category = document.querySelector(".filter-btn.active").dataset.filter;
+  const searchTerm = searchInput.value.toLowerCase();
+  const sortValue = sortSelect.value;
 
-// Pagination
-const updateProductDisplay = () => {
-  const filter = document.querySelector(".filters button.active").dataset.filter;
-  const query = searchInput.value.toLowerCase();
-  const sort = sortSelect.value;
+  let filtered = Array.from(document.querySelectorAll(".product"));
 
-  let filteredProducts = Array.from(products).filter(p => {
-    if (filter !== "all" && p.dataset.category !== filter) return false;
-    const name = p.querySelector("h3").textContent.toLowerCase();
-    const category = p.dataset.category.toLowerCase();
-    const price = parseFloat(p.querySelector(".price").textContent.replace("$", ""));
-    return name.includes(query) || category.includes(query) || price.toString().includes(query);
-  });
-
-  // Sort products
-  filteredProducts.sort((a, b) => {
-    const nameA = a.querySelector("h3").textContent.toLowerCase();
-    const nameB = b.querySelector("h3").textContent.toLowerCase();
-    const priceA = parseFloat(a.querySelector(".price").textContent.replace("$", ""));
-    const priceB = parseFloat(b.querySelector(".price").textContent.replace("$", ""));
-    if (sort === "name-asc") return nameA.localeCompare(nameB);
-    if (sort === "name-desc") return nameB.localeCompare(nameA);
-    if (sort === "price-asc") return priceA - priceB;
-    if (sort === "price-desc") return priceB - priceA;
-    return 0;
-  });
-
-  // Pagination
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-  const start = (currentPage - 1) * productsPerPage;
-  const end = start + productsPerPage;
-
-  products.forEach(p => p.style.display = "none");
-  filteredProducts.slice(start, end).forEach(p => p.style.display = "block");
-
-  // Update pagination buttons
-  pagination.innerHTML = "";
-  for (let i = 1; i <= totalPages; i++) {
-    const btn = document.createElement("button");
-    btn.textContent = i;
-    btn.classList.toggle("active", i === currentPage);
-    btn.onclick = () => {
-      currentPage = i;
-      updateProductDisplay();
-    };
-    pagination.appendChild(btn);
+  if (category !== "all") {
+    filtered = filtered.filter(p => p.dataset.category === category);
   }
-};
-updateProductDisplay();
 
-// Add to cart
+  filtered = filtered.filter(p => {
+    const name = p.querySelector("h3").textContent.toLowerCase();
+    return name.includes(searchTerm);
+  });
+
+  filtered.sort((a, b) => {
+    const nameA = a.querySelector("h3").textContent;
+    const nameB = b.querySelector("h3").textContent;
+    const priceA = parseInt(a.querySelector(".price").textContent.replace(/[^0-9]/g, ""));
+    const priceB = parseInt(b.querySelector(".price").textContent.replace(/[^0-9]/g, ""));
+
+    if (sortValue === "name-asc") return nameA.localeCompare(nameB);
+    if (sortValue === "name-desc") return nameB.localeCompare(nameA);
+    if (sortValue === "price-asc") return priceA - priceB;
+    if (sortValue === "price-desc") return priceB - priceA;
+  });
+
+  document.querySelectorAll(".product").forEach(p => {
+    p.style.display = "none";
+    p.classList.remove("visible");
+  });
+
+   filtered.forEach((product, index) => {
+    product.style.display = "block";
+    setTimeout(() => {
+      product.classList.add("visible");
+    }, index * 50);
+  });
+ pagination.innerHTML = "";
+}
+
 document.querySelectorAll(".btn-buy").forEach(btn => {
-  btn.onclick = (e) => {
-    e.preventDefault();
-    const product = btn.closest(".product").querySelector("h3").textContent;
-    cart.push(product);
+  btn.addEventListener("click", () => {
+    const productName = btn.closest(".product").querySelector("h3").textContent;
+    cart.push(productName);
     localStorage.setItem("cart", JSON.stringify(cart));
     cartCount.textContent = cart.length;
-    btn.textContent = "Added ✓";
-    setTimeout(() => btn.textContent = "Add to Cart", 1000);
-  };
+    alert("Added to cart!");
+  });
 });
 
-// Contact seller
-document.querySelectorAll(".btn-contact").forEach(btn => {
-  btn.onclick = (e) => {
-    e.preventDefault();
-    contactProduct.value = btn.dataset.product;
-    document.getElementById("productContactMessage").textContent = "";
-    contactModal.classList.add("active");
-  };
-});
+function updateWishlistBadge() {
+  wishlistToggle.innerHTML = `❤️ ${wishlist.length}`;
+}
 
-// Wishlist
 document.querySelectorAll(".btn-wishlist").forEach(btn => {
-  const productId = btn.dataset.productId;
-  btn.classList.toggle("active", wishlist.includes(productId));
-  btn.onclick = (e) => {
-    e.preventDefault();
-    if (wishlist.includes(productId)) {
-      wishlist = wishlist.filter(id => id !== productId);
+  const id = btn.dataset.productId;
+  if (wishlist.includes(id)) btn.classList.add("active");
+
+  btn.addEventListener("click", () => {
+    if (wishlist.includes(id)) {
+      wishlist = wishlist.filter(w => w !== id);
       btn.classList.remove("active");
     } else {
-      wishlist.push(productId);
+      wishlist.push(id);
       btn.classList.add("active");
     }
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
     updateWishlistBadge();
-    updateWishlistModal();
-  };
+    renderWishlist();
+  });
 });
 
-// Wishlist modal
-wishlistToggle.onclick = () => wishlistModal.classList.add("active");
+wishlistToggle.addEventListener("click", () => {
+  wishlistModal.classList.add("active");
+  renderWishlist();
+});
 
-const updateWishlistModal = () => {
+function renderWishlist() {
   wishlistItems.innerHTML = "";
-  wishlist.forEach(id => {
-    const product = Array.from(products).find(p => p.querySelector(".btn-wishlist").dataset.productId === id);
-    if (product) {
-      const item = document.createElement("div");
-      item.className = "product";
-      item.innerHTML = `
-        <img src="${product.querySelector("img").src}" alt="${product.querySelector("h3").textContent}" loading="lazy">
-        <h3>${product.querySelector("h3").textContent}</h3>
-        <p class="price">${product.querySelector(".price").textContent}</p>
-        <a href="#" class="btn-buy">Add to Cart</a>
-        <a href="#" class="btn-contact" data-product="${product.querySelector("h3").textContent}">Contact Seller</a>
-        <a href="#" class="btn-wishlist active" data-product-id="${id}">❤️</a>
-      `;
-      item.querySelector(".btn-buy").onclick = (e) => {
-        e.preventDefault();
-        cart.push(product.querySelector("h3").textContent);
-        localStorage.setItem("cart", JSON.stringify(cart));
-        cartCount.textContent = cart.length;
-      };
-      item.querySelector(".btn-contact").onclick = (e) => {
-        e.preventDefault();
-        contactProduct.value = product.querySelector("h3").textContent;
-        document.getElementById("productContactMessage").textContent = "";
-        wishlistModal.classList.remove("active");
-        contactModal.classList.add("active");
-      };
-      item.querySelector(".btn-wishlist").onclick = (e) => {
-        e.preventDefault();
-        wishlist = wishlist.filter(wid => wid !== id);
-        localStorage.setItem("wishlist", JSON.stringify(wishlist));
-        updateWishlistBadge();
-        updateWishlistModal();
-        updateProductDisplay();
-      };
-      wishlistItems.appendChild(item);
-    }
-  });
   if (wishlist.length === 0) {
-    wishlistItems.innerHTML = "<p>Your wishlist is empty.</p>";
+    wishlistItems.innerHTML = "<p>Your wishlist is empty</p>";
+    return;
   }
-};
-updateWishlistModal();
-
-// Modal close
-contactModalClose.onclick = () => {
-  contactModal.classList.remove("active");
-  document.getElementById("productContactMessage").textContent = "";
-};
-wishlistModalClose.onclick = () => wishlistModal.classList.remove("active");
-
-// Modal keyboard navigation
-[contactModal, wishlistModal].forEach(modal => {
-  modal.onkeydown = (e) => {
-    if (e.key === "Escape") {
-      modal.classList.remove("active");
-      document.getElementById("productContactMessage").textContent = "";
+  wishlist.forEach(id => {
+    const originalProduct = document.querySelector(`.btn-wishlist[data-product-id="${id}"]`);
+    if (originalProduct) {
+      const product = originalProduct.closest(".product").cloneNode(true);
+      product.querySelector(".product-actions").remove();
+      wishlistItems.appendChild(product);
     }
-    if (e.key === "Tab") {
-      const focusable = modal.querySelectorAll("button, input, textarea, [tabindex]:not([tabindex='-1'])");
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    }
-  };
-});
-
-// Form validation
-const validateEmail = (email) => {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
-};
-
-const validateForm = (form) => {
-  const name = form.querySelector("input[name='name']").value.trim();
-  const email = form.querySelector("input[name='email']").value.trim();
-  const subject = form.querySelector("input[name='subject']").value.trim();
-  const message = form.querySelector("textarea[name='message']").value.trim();
-  
-  if (!name) return "Name is required.";
-  if (!email) return "Email is required.";
-  if (!validateEmail(email)) return "Please enter a valid email address.";
-  if (!subject) return "Subject is required.";
-  if (!message) return "Message is required.";
-  return "";
-};
-
-// Contact form submission
-contactForm.onsubmit = (e) => {
-  e.preventDefault();
-  const messageEl = document.getElementById("contactMessage");
-  const error = validateForm(contactForm);
-  
-  if (error) {
-    messageEl.textContent = error;
-    messageEl.className = "form-message error";
-  } else {
-    messageEl.textContent = "Thank you for your message! We'll get back to you soon.";
-    messageEl.className = "form-message success";
-    contactForm.reset();
-    setTimeout(() => {
-      messageEl.textContent = "";
-    }, 5000);
-  }
-};
-
-// Product contact form submission
-productContactForm.onsubmit = (e) => {
-  e.preventDefault();
-  const messageEl = document.getElementById("productContactMessage");
-  const error = validateForm(productContactForm);
-  
-  if (error) {
-    messageEl.textContent = error;
-    messageEl.className = "form-message error";
-  } else {
-    messageEl.textContent = `Thank you for your inquiry about ${contactProduct.value}! We'll respond soon.`;
-    messageEl.className = "form-message success";
-    productContactForm.reset();
-    setTimeout(() => {
-      contactModal.classList.remove("active");
-      messageEl.textContent = "";
-    }, 3000);
-  }
-};
-
-// Scroll reveal animation
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add("visible");
   });
-}, { threshold: 0.2 });
+}
 
-products.forEach(p => observer.observe(p));
-
-// Back to top button
-window.addEventListener("scroll", () => {
-  backToTop.classList.toggle("visible", window.scrollY > 300);
+document.querySelectorAll(".btn-contact").forEach(btn => {
+  btn.addEventListener("click", () => {
+    contactProduct.value = btn.dataset.product;
+    contactModal.classList.add("active");
+  });
 });
-backToTop.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+productContactForm.addEventListener("submit", e => {
+  e.preventDefault();
+  document.getElementById("productContactMessage").textContent = "Message sent successfully!";
+  setTimeout(() => {
+    contactModal.classList.remove("active");
+    document.getElementById("productContactMessage").textContent = "";
+  }, 2000);
+  productContactForm.reset();
+});
+
+[wishlistModalClose, contactModalClose].forEach(close => {
+  close.addEventListener("click", () => {
+    close.closest(".modal").classList.remove("active");
+  });
+});
+
+document.querySelectorAll(".modal").forEach(modal => {
+  modal.addEventListener("click", e => {
+    if (e.target === modal) {
+      modal.classList.remove("active");
+    }
+  });
+});
+
+window.addEventListener("scroll", () => {
+  backToTop.classList.toggle("visible", window.scrollY > 500);
+});
+
+backToTop.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+filterProducts();
